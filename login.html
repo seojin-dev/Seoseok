@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인 - 서석</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-box animate-fade-in">
+        <div class="logo">
+          <img src="assets/logo.svg" alt="서석 로고" class="animate-fade-in" />
+          <h1 class="animate-slide-up">서석</h1>
+        </div>
+
+        <div class="login-content">
+          <h2>시작하기</h2>
+          <p>PDF 문서를 AI로 분석하고 질문해보세요</p>
+
+          <button id="googleLogin" class="google-btn">
+            <img src="https://www.google.com/favicon.ico" alt="Google" />
+            Google 계정으로 계속하기
+          </button>
+
+          <div id="errorMessage" class="error-message"></div>
+
+          <div class="login-footer">
+            <p>
+              로그인 시 <a href="#">이용약관</a>과
+              <a href="#">개인정보처리방침</a>에 동의하게 됩니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Firebase 초기화
+      const firebaseConfig = {
+        apiKey: "AIzaSyBAsWQVqdkNp9FNv7toewUwlRGeVBLamtU",
+        authDomain: "documentanalyzer-d971a.firebaseapp.com",
+        projectId: "documentanalyzer-d971a",
+        storageBucket: "documentanalyzer-d971a.firebasestorage.app",
+        messagingSenderId: "620001562608",
+        appId: "1:620001562608:web:0d528974d3af9b270d9735",
+        measurementId: "G-XJ8HD9TXTC",
+      };
+
+      // Firebase 초기화
+      firebase.initializeApp(firebaseConfig);
+
+      // Google 로그인 함수
+      async function signInWithGoogle() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({
+          client_id:
+            "620001562608-faddmpo0f29hclg4t5knepsjt4nt6voi.apps.googleusercontent.com",
+        });
+
+        try {
+          const result = await firebase.auth().signInWithPopup(provider);
+          const user = result.user;
+          const userData = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            imageUrl: user.photoURL,
+          };
+          localStorage.setItem("userData", JSON.stringify(userData));
+          window.location.href = "app.html";
+        } catch (error) {
+          console.error("로그인 오류:", error);
+          document.getElementById("errorMessage").textContent =
+            "로그인 중 오류가 발생했습니다. 다시 시도해주세요.";
+        }
+      }
+
+      // 로그인 버튼 이벤트 리스너
+      document
+        .getElementById("googleLogin")
+        .addEventListener("click", signInWithGoogle);
+
+      // 자동 로그인 체크
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          window.location.href = "app.html";
+        }
+      });
+    </script>
+  </body>
+</html>
