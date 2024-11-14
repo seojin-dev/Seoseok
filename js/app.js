@@ -166,7 +166,7 @@ class PDFAnalyzer {
   async analyzeDocument(text) {
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${this.apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${this.apiKey}`, // beta 버전 사용
         {
           method: "POST",
           headers: {
@@ -178,22 +178,16 @@ class PDFAnalyzer {
                 parts: [
                   {
                     text: `다음 문서를 분석하고 주요 내용을 요약해주세요:
-                                        1. 문서의 주제
-                                        2. 핵심 포인트
-                                        3. 주요 결론
-                                        
-                                        문서 내용:
-                                        ${text.substring(0, 30000)}`,
+                            1. 문서의 주제
+                            2. 핵심 포인트
+                            3. 주요 결론
+                            
+                            문서 내용:
+                            ${text.substring(0, 30000)}`,
                   },
                 ],
               },
             ],
-            generationConfig: {
-              temperature: 0.7,
-              topK: 40,
-              topP: 0.95,
-              maxOutputTokens: 1024,
-            },
           }),
         }
       );
@@ -209,7 +203,6 @@ class PDFAnalyzer {
       this.displayAnalysis("문서 분석 중 오류가 발생했습니다.");
     }
   }
-
   async handleQuestion() {
     const question = this.questionInput.value.trim();
     if (!question) return;
@@ -219,7 +212,7 @@ class PDFAnalyzer {
 
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${this.apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${this.apiKey}`, // beta 버전 사용
         {
           method: "POST",
           headers: {
@@ -231,20 +224,14 @@ class PDFAnalyzer {
                 parts: [
                   {
                     text: `문서 내용: ${this.pdfText.substring(0, 30000)}
-                                        
-                                        질문: ${question}
-                                        
-                                        위 문서의 내용을 바탕으로 자세하게 답변해주세요.`,
+                            
+                            질문: ${question}
+                            
+                            위 문서의 내용을 바탕으로 자세하게 답변해주세요.`,
                   },
                 ],
               },
             ],
-            generationConfig: {
-              temperature: 0.7,
-              topK: 40,
-              topP: 0.95,
-              maxOutputTokens: 1024,
-            },
           }),
         }
       );
@@ -259,7 +246,7 @@ class PDFAnalyzer {
       console.error("응답 오류:", error);
       this.addMessage(
         "ai",
-        "죄송합니다. 답변을 생성하는 중 오류가 발생했습니다. (1분 후 다시 시도해 주세요.)"
+        "죄송합니다. 답변을 생성하는 중 오류가 발생했습니다."
       );
     }
   }
