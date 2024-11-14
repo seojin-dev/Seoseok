@@ -33,7 +33,7 @@ class PDFAnalyzer {
                     <img src="${userData.imageUrl}" alt="${userData.name}" class="user-avatar">
                     <span class="user-name">${userData.name}</span>
                 </div>
-                <button onclick="location.href='login.html'" class="logout-btn">로그아웃</button>
+                <button onclick="handleLogout()" class="logout-btn">로그아웃</button>
             `;
     } else {
       window.location.href = "login.html";
@@ -98,7 +98,6 @@ class PDFAnalyzer {
       this.pdfDoc = pdf;
       this.totalPages = pdf.numPages;
 
-      // 전체 텍스트 추출
       let text = "";
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
@@ -179,12 +178,12 @@ class PDFAnalyzer {
                 parts: [
                   {
                     text: `다음 문서를 분석하고 주요 내용을 요약해주세요:
-                            1. 문서의 주제
-                            2. 핵심 포인트
-                            3. 주요 결론
-                            
-                            문서 내용:
-                            ${text.substring(0, 30000)}`,
+                                        1. 문서의 주제
+                                        2. 핵심 포인트
+                                        3. 주요 결론
+                                        
+                                        문서 내용:
+                                        ${text.substring(0, 30000)}`,
                   },
                 ],
               },
@@ -232,10 +231,10 @@ class PDFAnalyzer {
                 parts: [
                   {
                     text: `문서 내용: ${this.pdfText.substring(0, 30000)}
-                            
-                            질문: ${question}
-                            
-                            위 문서의 내용을 바탕으로 자세하게 답변해주세요.`,
+                                        
+                                        질문: ${question}
+                                        
+                                        위 문서의 내용을 바탕으로 자세하게 답변해주세요.`,
                   },
                 ],
               },
@@ -260,7 +259,7 @@ class PDFAnalyzer {
       console.error("응답 오류:", error);
       this.addMessage(
         "ai",
-        "죄송합니다. 답변을 생성하는 중 오류가 발생했습니다."
+        "죄송합니다. 답변을 생성하는 중 오류가 발생했습니다. (1분 후 다시 시도해 주세요.)"
       );
     }
   }

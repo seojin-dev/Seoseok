@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>서석 - AI 문서 분석</title>
     <link rel="stylesheet" href="css/style.css" />
+    <!-- Firebase SDK 추가 -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
       pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -18,9 +21,12 @@
           <img src="assets/logo.svg" alt="서석 로고" />
           <span>서석</span>
         </div>
-        <div class="user-profile" id="userProfile"></div>
+        <div class="user-profile">
+          <img id="userPhoto" alt="프로필 사진" />
+          <span id="userName"></span>
+          <button class="logout-btn" onclick="handleLogout()">로그아웃</button>
+        </div>
       </nav>
-
       <main class="app-main">
         <section class="upload-section" id="uploadSection">
           <div class="upload-box" id="uploadBox">
@@ -68,6 +74,58 @@
         </section>
       </main>
     </div>
+    <script>
+      // Firebase 초기화
+      const firebaseConfig = {
+        apiKey: "AIzaSyBAsWQVqdkNp9FNv7toewUwlRGeVBLamtU",
+        authDomain: "documentanalyzer-d971a.firebaseapp.com",
+        projectId: "documentanalyzer-d971a",
+        storageBucket: "documentanalyzer-d971a.appspot.com",
+        messagingSenderId: "620001562608",
+        appId: "1:620001562608:web:0d528974d3af9b270d9735",
+        measurementId: "G-XJ8HD9TXTC",
+      };
+
+      // Firebase가 이미 초기화되었는지 확인
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+
+      // 로그인 상태 확인
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          // 사용자 정보 표시
+          const userNameElement = document.getElementById("userName");
+          const userPhotoElement = document.getElementById("userPhoto");
+
+          if (userNameElement) userNameElement.textContent = user.displayName;
+          if (userPhotoElement) {
+            userPhotoElement.src = user.photoURL;
+            userPhotoElement.style.width = "40px";
+            userPhotoElement.style.height = "40px";
+            userPhotoElement.style.borderRadius = "50%";
+          }
+        } else {
+          // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+          window.location.replace("login.html");
+        }
+      });
+
+      // 로그아웃 처리
+      function handleLogout() {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            localStorage.clear(); // 로컬 스토리지 클리어
+            window.location.replace("login.html");
+          })
+          .catch((error) => {
+            console.error("로그아웃 오류:", error);
+            alert("로그아웃 중 오류가 발생했습니다.");
+          });
+      }
+    </script>
     <script src="js/app.js"></script>
   </body>
 </html>

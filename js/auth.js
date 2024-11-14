@@ -20,13 +20,38 @@ function onSignIn(googleUser) {
 }
 
 // 로그아웃 함수
-function signOut() {
-  const auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(() => {
+// auth.js
+async function signOut() {
+  try {
+    // Firebase 로그아웃
+    await firebase.auth().signOut();
+
+    // 로컬 스토리지 데이터 삭제
     localStorage.removeItem("userData");
-    window.location.href = "index.html";
-  });
+
+    // Google 로그인 상태도 함께 해제
+    const auth2 = gapi.auth2.getAuthInstance();
+    if (auth2) {
+      await auth2.signOut();
+    }
+
+    // 로그인 페이지로 리다이렉트
+    window.location.href = "login.html";
+  } catch (error) {
+    console.error("로그아웃 오류:", error);
+    throw error;
+  }
 }
+
+// app.html에서 로그아웃 버튼에 이벤트 리스너 추가
+document.querySelector(".logout-btn").addEventListener("click", async () => {
+  try {
+    await signOut();
+  } catch (error) {
+    console.error("로그아웃 실패:", error);
+    alert("로그아웃 중 오류가 발생했습니다.");
+  }
+});
 
 // 로그인 상태 확인
 function checkAuth() {
