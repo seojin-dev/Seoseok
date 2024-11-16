@@ -34,7 +34,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  padding: 0.5rem 0; /* 패딩 축소 */
 }
 
 .hero-section {
@@ -112,12 +112,20 @@ body {
 .login-container {
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 .login-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.login-content {
   background: white;
   padding: 3rem;
   border-radius: 16px;
@@ -127,22 +135,30 @@ body {
   width: 100%;
 }
 
-.login-box .logo {
+.logo {
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* 간격 축소 */
 }
 
-.login-box h1 {
+.logo img {
+  width: 32px; /* 로고 크기 축소 */
+  height: 32px;
+}
+
+.logo h1 {
+  font-size: 1.5rem; /* 폰트 크기 축소 */
   color: var(--text-color);
-  margin-bottom: 0.5rem;
 }
 
-.login-box h2 {
+.login-content h2 {
   font-size: 1.5rem;
   color: var(--text-color);
   margin-bottom: 1rem;
 }
 
-.login-box p {
+.login-content p {
   color: #666;
   margin-bottom: 2rem;
 }
@@ -172,17 +188,6 @@ body {
   height: 20px;
 }
 
-.login-footer {
-  margin-top: 2rem;
-  font-size: 0.875rem;
-  color: #666;
-}
-
-.login-footer a {
-  color: var(--primary-color);
-  text-decoration: none;
-}
-
 /* 앱 페이지 스타일 */
 .app-container {
   min-height: 100vh;
@@ -192,7 +197,7 @@ body {
 
 .app-nav {
   background: white;
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem; /* 패딩 축소 */
   box-shadow: var(--shadow);
   display: flex;
   justify-content: space-between;
@@ -202,36 +207,32 @@ body {
   z-index: 100;
 }
 
-.logo {
+.user-profile {
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.logo img {
-  width: 40px;
-  height: 40px;
 }
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem; /* 간격 축소 */
 }
 
 .user-avatar {
-  width: 40px;
-  height: 40px;
+  width: 32px; /* 크기 축소 */
+  height: 32px;
   border-radius: 50%;
 }
 
 .logout-btn {
-  padding: 0.5rem 1rem;
+  padding: 0.3rem 0.8rem; /* 패딩 축소 */
   background: #dc3545;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 0.9rem; /* 폰트 크기 축소 */
 }
 
 .app-main {
@@ -318,6 +319,7 @@ body {
   background: #3367d6;
 }
 
+/* AI 분석 결과 영역 */
 .analysis-result {
   background: white;
   padding: 1.5rem;
@@ -328,11 +330,13 @@ body {
 .result-content {
   height: 70vh;
   overflow-y: auto;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 4px;
+  padding: 1.5rem;
+  background: white; /* 배경색을 흰색으로 변경 */
+  border-radius: 8px;
   margin-top: 1rem;
   white-space: pre-wrap;
+  border: 1px solid var(--border-color);
+  line-height: 1.8;
 }
 
 .chat-section {
@@ -402,11 +406,35 @@ body {
   background: #3367d6;
 }
 
-/* 섹션 제목 */
-h3 {
-  margin-bottom: 1rem;
-  color: var(--text-color);
-  font-size: 1.25rem;
+/* Footer 스타일 */
+.footer {
+  background-color: #202124;
+  padding: 1.5rem 0;
+  text-align: center;
+  width: 100%;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer p {
+  margin: 0.5rem 0;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: #4285f4;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #8ab4f8;
 }
 
 /* 애니메이션 */
@@ -463,8 +491,7 @@ h3 {
     flex-direction: column;
   }
 
-  .login-box {
-    margin: 1rem;
+  .login-content {
     padding: 2rem;
   }
 
@@ -480,69 +507,7 @@ h3 {
     width: 100%;
   }
 }
-.feature-text {
-  line-height: 2;
-  font-size: 1.2rem;
-  text-align: left;
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-.footer {
-  background-color: #f8f9fa;
-  padding: 1.5rem 0;
-  text-align: center;
-  margin-top: auto;
-  border-top: 1px solid #dee2e6;
-  width: 100%;
-}
 
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.footer p {
-  margin: 0.5rem 0;
-  color: #6c757d;
-  font-size: 0.9rem;
-}
-
-.footer a {
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.footer a:hover {
-  color: #3367d6;
-}
-
-/* 페이지 전체 컨테이너 설정 */
-.app-container,
-.login-container,
-.landing-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* 메인 컨텐츠가 footer를 밀어내도록 설정 */
-.app-main,
-.login-box,
-.landing-content {
-  flex: 1;
-}
-
-.feature-card h3 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 1.25rem;
-}
 /* 스크롤바 스타일링 */
 ::-webkit-scrollbar {
   width: 8px;
