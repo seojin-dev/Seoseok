@@ -488,6 +488,52 @@ h3 {
   margin: 2rem auto;
   padding: 0 1rem;
 }
+.footer {
+  background-color: #f8f9fa;
+  padding: 1.5rem 0;
+  text-align: center;
+  margin-top: auto;
+  border-top: 1px solid #dee2e6;
+  width: 100%;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer p {
+  margin: 0.5rem 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #3367d6;
+}
+
+/* 페이지 전체 컨테이너 설정 */
+.app-container,
+.login-container,
+.landing-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 메인 컨텐츠가 footer를 밀어내도록 설정 */
+.app-main,
+.login-box,
+.landing-content {
+  flex: 1;
+}
 
 .feature-card h3 {
   display: flex;
