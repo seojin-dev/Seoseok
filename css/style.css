@@ -34,7 +34,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0; /* 패딩 축소 */
+  padding: 1rem 0;
 }
 
 .hero-section {
@@ -112,20 +112,12 @@ body {
 .login-container {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 .login-box {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-}
-
-.login-content {
   background: white;
   padding: 3rem;
   border-radius: 16px;
@@ -135,30 +127,22 @@ body {
   width: 100%;
 }
 
-.logo {
+.login-box .logo {
   margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem; /* 간격 축소 */
 }
 
-.logo img {
-  width: 32px; /* 로고 크기 축소 */
-  height: 32px;
-}
-
-.logo h1 {
-  font-size: 1.5rem; /* 폰트 크기 축소 */
+.login-box h1 {
   color: var(--text-color);
+  margin-bottom: 0.5rem;
 }
 
-.login-content h2 {
+.login-box h2 {
   font-size: 1.5rem;
   color: var(--text-color);
   margin-bottom: 1rem;
 }
 
-.login-content p {
+.login-box p {
   color: #666;
   margin-bottom: 2rem;
 }
@@ -188,6 +172,17 @@ body {
   height: 20px;
 }
 
+.login-footer {
+  margin-top: 2rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.login-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
 /* 앱 페이지 스타일 */
 .app-container {
   min-height: 100vh;
@@ -197,16 +192,52 @@ body {
 
 .app-nav {
   background: white;
-  padding: 0.5rem 1rem; /* 패딩 축소 */
+  padding: 0.5rem 1rem;
   box-shadow: var(--shadow);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 60px;
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo img {
+  width: 32px;
+  height: 32px;
+}
+
+.logo span {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+/* 버튼 스타일 통일 */
+.login-btn,
+.back-btn {
+  padding: 0.5rem 1.5rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover,
+.back-btn:hover {
+  background: #3367d6;
+}
+
+/* 사용자 프로필 영역 수정 */
 .user-profile {
   display: flex;
   align-items: center;
@@ -216,23 +247,60 @@ body {
 .user-info {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* 간격 축소 */
+  gap: 0.8rem;
 }
 
 .user-avatar {
   width: 32px; /* 크기 축소 */
-  height: 32px;
+  height: 32px; /* 크기 축소 */
   border-radius: 50%;
+  object-fit: cover; /* 이미지 비율 유지 */
+}
+
+.user-name {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  font-weight: 500;
 }
 
 .logout-btn {
-  padding: 0.3rem 0.8rem; /* 패딩 축소 */
+  padding: 0.3rem 0.8rem;
   background: #dc3545;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem; /* 폰트 크기 축소 */
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: #c82333;
+}
+
+/* 메뉴 바 수정 */
+.app-nav {
+  background: white;
+  padding: 0.5rem 1rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* 반응형 대응 */
+@media (max-width: 768px) {
+  .user-name {
+    display: none; /* 모바일에서는 이름 숨김 */
+  }
+
+  .user-info {
+    gap: 0.5rem;
+  }
 }
 
 .app-main {
@@ -319,7 +387,6 @@ body {
   background: #3367d6;
 }
 
-/* AI 분석 결과 영역 */
 .analysis-result {
   background: white;
   padding: 1.5rem;
@@ -331,7 +398,7 @@ body {
   height: 70vh;
   overflow-y: auto;
   padding: 1.5rem;
-  background: white; /* 배경색을 흰색으로 변경 */
+  background: white;
   border-radius: 8px;
   margin-top: 1rem;
   white-space: pre-wrap;
@@ -406,7 +473,7 @@ body {
   background: #3367d6;
 }
 
-/* Footer 스타일 */
+/* Footer */
 .footer {
   background-color: #202124;
   padding: 1.5rem 0;
@@ -506,9 +573,18 @@ body {
   .chat-input button {
     width: 100%;
   }
+
+  .terms-content {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .user-name {
+    display: none;
+  }
 }
 
-/* 스크롤바 스타일링 */
+/* 스크롤바 스타일 */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -524,4 +600,86 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+/* 약관 페이지 스타일 */
+.terms-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background-color);
+}
+
+.terms-content {
+  flex: 1;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.terms-content h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.terms-content section {
+  margin-bottom: 2rem;
+}
+
+.terms-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+}
+
+.terms-content p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.terms-content ul {
+  margin: 1rem 0 1rem 1.5rem;
+}
+
+.terms-content li {
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+/* 메뉴 바 통일 */
+.app-nav,
+.terms-nav,
+.nav-bar {
+  background: white;
+  padding: 0.5rem 1rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* 홈으로 가기 버튼 */
+.back-btn {
+  padding: 0.5rem 1.5rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #3367d6;
 }
